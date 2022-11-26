@@ -55,13 +55,13 @@ export class TodosAccess {
 
     //update to do function
     async updateTodoItem(
-        userId: string,
         todoId: string,
+        userId: string,
         todoUpdate: TodoUpdate
     ): Promise<TodoUpdate> {
         logger.info('Update todo item function called')
 
-        await this.docClient
+        const result = await this.docClient
         .update({
             TableName: this.todosTable,
             Key: {
@@ -77,10 +77,13 @@ export class TodosAccess {
             ExpressionAttributeNames: {
                 '#name': 'name'
             },
-            ReturnValues: 'UPDATED_NEW'
+            ReturnValues: 'ALL_NEW'
         })
         .promise()
-        return todoUpdate as TodoUpdate
+
+        const todoItemUpdate = result.Attributes
+        logger.info('Todo item updated', todoItemUpdate)
+        return todoItemUpdate as TodoUpdate
     }
 
     async deleteTodoItem(todoId: string, userId: string): Promise<string> {
