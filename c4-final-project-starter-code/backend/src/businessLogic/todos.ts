@@ -61,3 +61,12 @@ export async function deleteTodo(
     logger.info('Delete todo function called')
     return todosAccess.deleteTodoItem(todoId, userId)
 }
+
+// generate attachment url function
+export async function createAttachmentPresignedUrl(
+    todoId: string,
+    userId: string
+): Promise<string> {
+    logger.info('Create attachment function called by user', userId, todoId)
+    return attachmentUtils.getUploadUrl(todoId)
+}
