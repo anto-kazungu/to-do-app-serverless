@@ -30,7 +30,7 @@ provider:
     ATTACHMENT_S3_BUCKET: todo-serverless-app-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     INDEX_NAME: ${self:provider.environment.TODOS_CREATED_AT_INDEX}
-    AUTH_0_SECRET_ID: lcJX5dKyWWLzY-pwuWANp_VFrfZBUByNOsHMvxZY4Qqm4SZMA2IBDqx9P9YcTabT
+    AUTH_0_SECRET: 2JOb6rwBOScNioufmkXe34bQtzXi1tUspdNtOuXccjZClTYEEosxpg6G-nKZt3gg
 
   logs:
     # Enable API Gateway logs
@@ -74,7 +74,7 @@ functions:
           method: get
           path: todos
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -101,7 +101,7 @@ functions:
           method: post
           path: todos
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new todo
@@ -128,7 +128,7 @@ functions:
           method: patch
           path: todos/{todoId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Update a todo
@@ -155,7 +155,7 @@ functions:
           method: delete
           path: todos/{todoId}
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -176,7 +176,7 @@ functions:
           method: post
           path: todos/{todoId}/attachment
           cors: true
-          # authorizer: Auth
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -207,8 +207,19 @@ resources:
           ResponseParameters:
             gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
             gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-            gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+            gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
           ResponseType: DEFAULT_4XX
+          RestApiId:
+            Ref: ApiGatewayRestApi
+
+      GatewayResponseDefault5XX:
+        Type: AWS::ApiGateway::GatewayResponse
+        Properties:
+          ResponseParameters:
+            gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+            gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+            gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,DELETE,PATCH,PUT'"
+          ResponseType: DEFAULT_5XX
           RestApiId:
             Ref: ApiGatewayRestApi
 

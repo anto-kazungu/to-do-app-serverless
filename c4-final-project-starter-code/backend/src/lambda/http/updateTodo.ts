@@ -24,6 +24,9 @@ export const handler = middy(
     )
     return {
         statusCode: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
         body: ''
     }
   }

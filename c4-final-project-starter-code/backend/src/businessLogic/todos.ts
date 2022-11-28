@@ -37,13 +37,15 @@ export async function createTodo(
     return await todosAccess.createTodoItem(newItem)
 }
 
-    //get todos function
+//get todos function
+
 export async function getTodosForUser(userId: string): Promise<TodoItem[]> {
     logger.info('Get todos for user function called')
     return todosAccess.getAllTodos(userId)
 }
 
 // update todo function
+
 export async function updateTodo(
     todoId: string,
     todoUpdate: UpdateTodoRequest,
@@ -54,6 +56,7 @@ export async function updateTodo(
 }
 
 // delete todo function
+
 export async function deleteTodo(
     todoId: string,
     userId: string
@@ -63,6 +66,7 @@ export async function deleteTodo(
 }
 
 // generate attachment url function
+
 export async function createAttachmentPresignedUrl(
     todoId: string,
     userId: string

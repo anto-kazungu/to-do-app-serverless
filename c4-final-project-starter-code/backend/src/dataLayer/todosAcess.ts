@@ -54,6 +54,7 @@ export class TodosAccess {
     }
 
     //update to do function
+    
     async updateTodoItem(
         todoId: string,
         userId: string,
@@ -85,6 +86,8 @@ export class TodosAccess {
         logger.info('Todo item updated', todoItemUpdate)
         return todoItemUpdate as TodoUpdate
     }
+
+    // delete todo function
 
     async deleteTodoItem(todoId: string, userId: string): Promise<string> {
         logger.info('Delete todo item function called')
